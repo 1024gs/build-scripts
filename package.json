@@ -1,5 +1,5 @@
 {
-  "name": "the-scripts",
+  "name": "build-scripts",
   "private": true,
   "version": "0.0.0",
   "description": "A few script for starting a new project such as build and transpiling typescript.",
