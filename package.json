@@ -1,0 +1,26 @@
+{
+  "name": "the-scripts",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A few script for starting a new project such as build and transpiling typescript.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run scripts & npm run styles && node ./scripts/task-start.js & npm run watch",
+    "scripts": "node ./scripts/task-scripts.js",
+    "styles": "node ./scripts/task-styles.js",
+    "build-bootstrap": "node ./scripts/task-build-bootstrap.js",
+    "watch": "node ./scripts/task-watch.js",
+    "tsc": "./node_modules/.bin/tsc --pretty --noEmit --jsx preserve ./src/index.tsx",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sergiu Ghenciu",
+  "license": "Do whatever you please",
+  "dependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "autoprefixer": "^10.4.14",
+    "node-sass": "^8.0.0",
+    "postcss": "^8.4.23",
+    "typescript": "^5.0.4"
+  }
+}

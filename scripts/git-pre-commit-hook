@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# To enable this hook, symlink or copy this file to .git/hooks/pre-commit.
+
+
+# Allows us to read user input below, assigns stdin to keyboard
+exec < /dev/tty
+
+# Colors
+RED=$(tput setaf 1) GREEN=$(tput setaf 2) YELLOW=$(tput setaf 3)
+NC=$(tput sgr0)
+
+# Reminder to run the tests
+echo "Reminder to run ${GREEN}npm test${NC} before commiting.";
+doYouWantToContinue()
+{
+ read -p "Do you want to commit (Y/N)? " answer
+ if [ "$answer" == "Y" ] ;then
+   return
+ elif [ "$answer" == "N" ] || [ "$answer" == "n" ] ;then
+   echo CANCELED
+   exit 1
+ else
+   doYouWantToContinue
+ fi
+}
+
+sleep 0.1
+doYouWantToContinue
+
+
+# Prevent commits in master branch
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$branch" = "master.off" ]; then
+  echo "${YELLOW}You cannot commit directly to master branch.${NC}"
+  exit 1
+fi
+
+
+# Redirect output to stderr.
+exec 1>&2
+
+git diff --cached --name-only --diff-filter=ACMRTUB | \
+  xargs node ./scripts/task-pre-commit.js

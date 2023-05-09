@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "incremental": false,
+    "target": "ESNEXT",
+    "module": "ESNext",
+    "jsx": "preserve",
+    "noEmit": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  }
+}
