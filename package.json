@@ -11,17 +11,18 @@
     "build-bootstrap": "node ./scripts/task-build-bootstrap.js",
     "watch": "node ./scripts/task-watch.js",
     "tsc": "./node_modules/.bin/tsc --pretty --noEmit --jsx preserve ./src/index.tsx",
-    "test": "jasmine"
+    "test": "nyc --reporter=lcov --reporter=text-summary --all jasmine"
   },
   "author": "Sergiu Ghenciu",
   "license": "Do whatever you please",
   "dependencies": {
-    "@babel/core": "^7.21.8",
-    "@babel/preset-env": "^7.21.5",
-    "autoprefixer": "^10.4.14",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "autoprefixer": "^10.4.20",
     "jasmine": "^5.4.0",
-    "node-sass": "^8.0.0",
-    "postcss": "^8.4.23",
-    "typescript": "^5.0.4"
+    "nyc": "^17.1.0",
+    "postcss": "^8.4.49",
+    "sass": "^1.81.0",
+    "typescript": "^5.6.3"
   }
 }
