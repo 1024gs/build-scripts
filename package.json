@@ -20,6 +20,7 @@
     "@babel/preset-env": "^7.26.0",
     "autoprefixer": "^10.4.20",
     "jasmine": "^5.4.0",
+    "livereload": "^0.9.3",
     "nyc": "^17.1.0",
     "postcss": "^8.4.49",
     "sass": "^1.81.0",
