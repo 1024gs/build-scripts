@@ -11,7 +11,8 @@
     "build-bootstrap": "node ./scripts/task-build-bootstrap.js",
     "watch": "node ./scripts/task-watch.js",
     "tsc": "./node_modules/.bin/tsc --pretty --noEmit --jsx preserve ./src/index.tsx",
-    "test": "nyc --reporter=lcov --reporter=text-summary --all jasmine"
+    "test": "jest --coverage",
+    "test-coverage": "nyc --reporter=lcov --reporter=text-summary jasmine --config=jasmine.json"
   },
   "author": "Sergiu Ghenciu",
   "license": "Do whatever you please",
@@ -19,9 +20,8 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "autoprefixer": "^10.4.20",
-    "jasmine": "^5.4.0",
+    "jest": "^29.7.0",
     "livereload": "^0.9.3",
-    "nyc": "^17.1.0",
     "postcss": "^8.4.49",
     "sass": "^1.81.0",
     "typescript": "^5.6.3"

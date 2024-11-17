@@ -1,0 +1,6 @@
+{
+    "bail": 1,
+    "verbose": true,
+    "roots": ["scripts-tests"],
+    "testMatch": [ "**/*-test.js" ]
+ }
