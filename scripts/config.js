@@ -1,10 +1,12 @@
 const path = require("path");
 const appRoot = path.resolve(__dirname, "../");
-const { scanDir, test, is, not, any } = require("./utils.js");
+const { scanDir, is, not, any, isPrefixOf } = require("./utils.js");
 
-const prependRoot = (x) => path.join(appRoot, x);
+const prependRoot = (x) =>
+  !isPrefixOf(appRoot, x) ? path.join(appRoot, x) : x;
 
-const removeRoot = (x) => x.replace(appRoot + path.sep, "").replace(/\\/g, "/");
+const removeRoot = (x) =>
+  isPrefixOf(appRoot, x) ? x.substring(`${appRoot}${path.sep}`.length) : x;
 
 const isSassSubmodule = (fileName) => /_.*\.scss/.test(fileName);
 

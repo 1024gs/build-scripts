@@ -50,26 +50,34 @@ const once = (fn) => {
 };
 
 const scanDir = (dir) => {
-  return fs
-    .readdirSync(dir)
-    .reduce(
-      (a, x) =>
-        fs.statSync(path.join(dir, x)).isDirectory()
-          ? a.concat(scanDir(path.join(dir, x)))
-          : a.concat(path.join(dir, x)),
-      []
-    );
+  const result = [];
+  const files = fs.readdirSync(dir, { withFileTypes: true });
+  // files.sort((a, b) =>a.isDirectory() && b.isFile() ? 1 : a.isFile() && b.isDirectory() ? -1 : 0);
+  for (let i = 0; i < files.length; i++) {
+    if (files[i].isDirectory()) {
+      const filesOfDirectory = scanDir(path.join(dir, files[i].name));
+      for (let j = 0; j < filesOfDirectory.length; j++) {
+        result.push(filesOfDirectory[j]);
+      }
+    } else {
+      result.push(path.join(dir, files[i].name));
+    }
+  }
+
+  return result;
 };
 
-const source = ({ findFiles } = { findFiles: () => undefined }) => () => {
-  return findFiles();
-};
+const source =
+  ({ findFiles } = { findFiles: () => undefined }) =>
+  () => {
+    return findFiles();
+  };
 
 const pipeline = ([source, ...fns]) => {
   const fileNames = source();
   const pipe = fns.reduce(
     (f, g) => (a) => f(a).then(g),
-    (a) => Promise.resolve(a)
+    (a) => Promise.resolve(a),
   );
 
   if (Array.isArray(fileNames)) {
