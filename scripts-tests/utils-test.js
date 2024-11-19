@@ -187,6 +187,7 @@ describe("utils", () => {
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.css`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.js`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.scss`,
+        `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.ts`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}directory${path.sep}baz.css`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}directory${path.sep}baz.js`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}foo.css`,

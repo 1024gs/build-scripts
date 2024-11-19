@@ -75,6 +75,7 @@ describe("config", () => {
         "foo.scss",
         "_foo.scss",
         "foo.js",
+        "foo.ts",
       ]);
       expect(scssSource()).toEqual(["foo.scss"]);
     });
