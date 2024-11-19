@@ -4,9 +4,6 @@
     "roots": ["scripts-tests", "scripts"],
     "testMatch": [ "**/*-test.js" ],
     "collectCoverageFrom": [
-        "scripts/*.js",
-        "!scripts/task-build-bootstrap.js",
-        "!scripts/task-scripts.js",
-        "!scripts/task-styles.js"
+       
     ]
  }

@@ -13,6 +13,7 @@ const {
   once,
   scanDir,
   source,
+  pipeline,
 } = require("../scripts/utils.js");
 
 describe("utils", () => {
@@ -176,7 +177,7 @@ describe("utils", () => {
       expect(counter).toEqual(1);
     });
 
-    it("the function fn always returns the first value", () => {
+    it("the function fn always returns the value from the first call", () => {
       expect(incrementOnce()).toEqual(1);
     });
   });
@@ -200,15 +201,95 @@ describe("utils", () => {
   });
 
   describe("source({ findFiles })", () => {
-    it("returns a function that when called, calls findFiles() and returns its result", () => {
+    it("tells the pipeline how to find the source files", () => {
       const findFiles = () => ["foo.js", "bar.js"];
-      const getFiles = source({ findFiles });
-      expect(getFiles()).toEqual(findFiles());
+      expect(source({ findFiles })()).toEqual(["foo.js", "bar.js"]);
     });
 
-    it("findFiles defaults to () => undefined", () => {
-      const getFiles = source();
-      expect(getFiles()).toEqual(undefined);
+    it("defaults to undefined", () => {
+      expect(source()()).toEqual(undefined);
+    });
+  });
+
+  describe("pipeline([source, ...fns])", () => {
+    it("builds a pipeline", async () => {
+      const pipe1 =
+        (options) =>
+        async ({ fileName, content }) => {
+          expect(fileName).toBe(undefined);
+          expect(content).toBe(undefined);
+          return { fileName: "foo", content: "bar" };
+        };
+
+      const pipe2 =
+        (options) =>
+        async ({ fileName, content }) => {
+          expect(fileName).toBe("foo");
+          expect(content).toBe("bar");
+          return { fileName, content };
+        };
+
+      const myPipeline = pipeline([
+        source(), // source must always be here. It is a special pipe.
+        pipe1(),
+        pipe2(),
+      ]);
+
+      await myPipeline();
+    });
+
+    it("takes a single file", async () => {
+      const pipe1 =
+        (options) =>
+        async ({ fileName, content }) => {
+          expect(fileName).toBe("foo");
+          return { fileName, content };
+        };
+
+      const myPipeline = pipeline([
+        source({ findFiles: () => "foo" }), // source must always be here. It is a special pipe.
+        pipe1(),
+      ]);
+
+      await myPipeline();
+    });
+
+    it("takes an array of files", async () => {
+      const spy = jest.fn();
+
+      const pipe1 =
+        (options) =>
+        async ({ fileName, content }) => {
+          spy(fileName);
+          return { fileName, content };
+        };
+
+      const myPipeline = pipeline([
+        source({ findFiles: () => ["foo", "bar"] }), // source must always be here. It is a special pipe.
+        pipe1(),
+      ]);
+
+      await myPipeline();
+
+      expect(spy).toHaveBeenCalledTimes(2);
+      expect(spy.mock.calls[0][0]).toBe("foo");
+      expect(spy.mock.calls[1][0]).toBe("bar");
+    });
+
+    it("overrides the file", async () => {
+      const pipe1 =
+        (options) =>
+        async ({ fileName, content }) => {
+          expect(fileName).toBe("baz");
+          return { fileName, content };
+        };
+
+      const myPipeline = pipeline([
+        source({ findFiles: () => ["foo", "bar"] }), // source must always be here. It is a special pipe.
+        pipe1(),
+      ]);
+
+      await myPipeline({ fileName: "baz" });
     });
   });
 });
