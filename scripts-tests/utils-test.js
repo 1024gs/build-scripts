@@ -186,12 +186,14 @@ describe("utils", () => {
       expect(scanDir("scripts-tests/utils-test-mock")).toEqual([
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.css`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.js`,
+        `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.scss`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}directory${path.sep}baz.css`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}directory${path.sep}baz.js`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}foo.css`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}foo.js`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}foo.scss`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}foo.ts`,
+        `scripts-tests${path.sep}utils-test-mock${path.sep}_vars.scss`,
       ]);
     });
   });
