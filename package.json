@@ -11,8 +11,7 @@
     "build-bootstrap": "node ./scripts/task-build-bootstrap.js",
     "watch": "node ./scripts/task-watch.js",
     "tsc": "./node_modules/.bin/tsc --pretty --noEmit --jsx preserve ./src/index.tsx",
-    "test": "jest --coverage",
-    "test-coverage": "nyc --reporter=lcov --reporter=text-summary jasmine --config=jasmine.json"
+    "test": "jest --coverage"
   },
   "author": "Sergiu Ghenciu",
   "license": "Do whatever you please",
