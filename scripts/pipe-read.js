@@ -1,16 +1,12 @@
 const fs = require("fs");
 
-const pipe = (options) => ({ fileName }) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(fileName, "utf8", (err, content) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve({ fileName, content });
-      }
-    });
-  });
-};
+const pipe =
+  (options) =>
+  ({ fileName }) => {
+    const result = fs.readFileSync(fileName, "utf8");
+
+    return { fileName, content: result };
+  };
 
 module.exports = {
   read: pipe,

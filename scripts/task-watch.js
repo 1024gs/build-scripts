@@ -49,7 +49,7 @@ const compileScssAndReloadBrowser = async (fileName) => {
     }
     scssFiles.map((fileName) => watch(fileName, compileScssAndReloadBrowser));
     scssFiles.map((fileName) =>
-      liveReloadServer.refresh(cssDestination(fileName))
+      liveReloadServer.refresh(cssDestination(fileName)),
     );
   } else {
     unwatch(fileName);

@@ -52,7 +52,6 @@ const once = (fn) => {
 const scanDir = (dir) => {
   const result = [];
   const files = fs.readdirSync(dir, { withFileTypes: true });
-  // files.sort((a, b) =>a.isDirectory() && b.isFile() ? 1 : a.isFile() && b.isDirectory() ? -1 : 0);
   for (let i = 0; i < files.length; i++) {
     if (files[i].isDirectory()) {
       const filesOfDirectory = scanDir(path.join(dir, files[i].name));

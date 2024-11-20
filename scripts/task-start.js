@@ -13,7 +13,7 @@ const doesNotHaveExtension = not(
     is(".nrrd"),
     is(".vtk"),
     is(".gzip"),
-  ])
+  ]),
 );
 
 const resolve = (url) => {
