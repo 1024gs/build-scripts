@@ -1,4 +1,4 @@
-# `Build scripts`
+# `Build scripts` ![](https://github.com/1024gs/build-scripts/actions/workflows/node.js.yml/badge.svg)
 
 Avoid bundling and develop in a more old-school way.
 
