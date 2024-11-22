@@ -2,6 +2,9 @@
 
 Avoid build processes and use JavaScript in a more old-school way.
 
+Look at scripts and scripts-tests folders.
+
+The whole repository is meant to be cloned and start the development.
 
 # Tasks
 
