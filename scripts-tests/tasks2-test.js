@@ -1,7 +1,7 @@
 const utils = require("../scripts/utils.js");
 jest
   .spyOn(utils, "source")
-  .mockImplementation(() => () => "scripts-tests/utils-test-mock/foo.scss");
+  .mockImplementation(() => () => "scripts-tests/test-mock/foo.scss");
 
 const fs = require("fs");
 jest.spyOn(fs, "writeFileSync");

@@ -184,19 +184,19 @@ describe("utils", () => {
 
   describe("scanDir(dir)", () => {
     it("recursevely scans the directory dir and returns a list of all the files", () => {
-      expect(scanDir("scripts-tests/utils-test-mock")).toEqual([
-        `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.css`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.js`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.scss`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}bar.ts`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}directory${path.sep}baz.css`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}directory${path.sep}directory${path.sep}baz.js`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}foo.css`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}foo.js`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}foo.scss`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}foo.ts`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}index.html`,
-        `scripts-tests${path.sep}utils-test-mock${path.sep}_vars.scss`,
+      expect(scanDir("scripts-tests/test-mock")).toEqual([
+        `scripts-tests${path.sep}test-mock${path.sep}directory${path.sep}bar.css`,
+        `scripts-tests${path.sep}test-mock${path.sep}directory${path.sep}bar.js`,
+        `scripts-tests${path.sep}test-mock${path.sep}directory${path.sep}bar.scss`,
+        `scripts-tests${path.sep}test-mock${path.sep}directory${path.sep}bar.ts`,
+        `scripts-tests${path.sep}test-mock${path.sep}directory${path.sep}directory${path.sep}baz.css`,
+        `scripts-tests${path.sep}test-mock${path.sep}directory${path.sep}directory${path.sep}baz.js`,
+        `scripts-tests${path.sep}test-mock${path.sep}foo.css`,
+        `scripts-tests${path.sep}test-mock${path.sep}foo.js`,
+        `scripts-tests${path.sep}test-mock${path.sep}foo.scss`,
+        `scripts-tests${path.sep}test-mock${path.sep}foo.ts`,
+        `scripts-tests${path.sep}test-mock${path.sep}index.html`,
+        `scripts-tests${path.sep}test-mock${path.sep}_vars.scss`,
       ]);
     });
   });

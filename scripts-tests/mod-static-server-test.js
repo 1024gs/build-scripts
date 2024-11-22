@@ -118,7 +118,7 @@ describe("staticServer(options)", () => {
     consoleLogSpy = jest.spyOn(console, "log").mockImplementation(jest.fn());
     http.createServer.mockImplementation((simulateRequest) => simulateRequest);
     const simulateRequest = staticServer({
-      expose: [{ path: "scripts-tests/utils-test-mock", as: "/" }],
+      expose: [{ path: "scripts-tests/test-mock", as: "/" }],
       ...options,
     });
 
@@ -158,7 +158,7 @@ describe("staticServer(options)", () => {
 
   it("serves the file exposed at the virtual url /foo", () => {
     const { simulateRequest, response } = createServer({
-      expose: [{ path: "scripts-tests/utils-test-mock", as: "/foo" }],
+      expose: [{ path: "scripts-tests/test-mock", as: "/foo" }],
     });
     simulateRequest({ url: "http://a.b/foo/foo.js" }, response);
     expect(response.statusCode).toBe(200);
@@ -222,15 +222,15 @@ describe("staticServer(options)", () => {
   it("not found log", () => {
     const { simulateRequest, response } = createServer({
       expose: [
-        { path: "scripts-tests/utils-test-mock", as: "/" },
-        { path: "scripts-tests/utils-test-mock", as: "/foo" },
+        { path: "scripts-tests/test-mock", as: "/" },
+        { path: "scripts-tests/test-mock", as: "/foo" },
       ],
     });
     simulateRequest({ url: "http://a.b/foo/non-existent-url.js" }, response);
     expect(console.log).toHaveBeenCalledWith(
       `${red("NONE WAS FOUND:")}\n` +
-        `   scripts-tests${path.sep}utils-test-mock${path.sep}foo${path.sep}non-existent-url.js\n` +
-        `   scripts-tests${path.sep}utils-test-mock${path.sep}non-existent-url.js`,
+        `   scripts-tests${path.sep}test-mock${path.sep}foo${path.sep}non-existent-url.js\n` +
+        `   scripts-tests${path.sep}test-mock${path.sep}non-existent-url.js`,
     );
   });
 
