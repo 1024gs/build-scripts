@@ -1,6 +1,6 @@
 # `Build scripts`
 
-Avoid build processes and use JavaScript in a more old-school.
+Avoid build processes and use JavaScript in a more old-school way.
 
 
 # Tasks
