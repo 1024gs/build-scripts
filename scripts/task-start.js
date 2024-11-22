@@ -1,12 +1,13 @@
-const { staticServer } = require("./mod-static-server.js");
+const {
+  staticServer,
+  doesNotHaveExtension,
+} = require("./mod-static-server.js");
 const { prependRoot } = require("./config.js");
-const { is, any, not } = require("./utils.js");
-
-const doesNotHaveExtension = not(
-  any([is(".css"), is(".html"), is(".js"), is(".ico")]),
-);
 
 const resolve = (url) => {
+  if (url === "/") {
+    return null;
+  }
   if (doesNotHaveExtension(url)) {
     return prependRoot(url + ".js");
   }

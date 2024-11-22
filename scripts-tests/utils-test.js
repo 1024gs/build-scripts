@@ -195,6 +195,7 @@ describe("utils", () => {
         `scripts-tests${path.sep}utils-test-mock${path.sep}foo.js`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}foo.scss`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}foo.ts`,
+        `scripts-tests${path.sep}utils-test-mock${path.sep}index.html`,
         `scripts-tests${path.sep}utils-test-mock${path.sep}_vars.scss`,
       ]);
     });

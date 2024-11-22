@@ -10,6 +10,14 @@ const cyan = (x) => `\x1b[36m${x}\x1b[0m`;
 const removePrefix = (prefix, x) =>
   isPrefixOf(prefix, x) ? x.substring(prefix.length) : x;
 
+const removeSuffix = (suffix, x) =>
+  isSuffixOf(suffix, x) ? x.substring(0, x.length - 1) : x;
+
+const appendIndex = (index, url) =>
+  removeSuffix("/", url) + "/" + removePrefix("/", index);
+
+const doesNotHaveExtension = (url) => path.parse(url).ext === "";
+
 const memoizeWith = (mFn, fn) => {
   const cache = {};
   return (...args) => {
@@ -90,10 +98,19 @@ const staticServer = ({
 
   const filesOnDisk = cache ? memoizeWith((x) => x, scanDir) : scanDir;
 
-  const resolveInternally = (index, url) => {
+  const _resolve = (index, url) => {
+    // 1. try the happy path
     let file = find(expose, filesOnDisk, url);
     if (file !== null) {
       return file;
+    }
+
+    // 2. if url doesn't have extention, append the`index` and look up again
+    if (doesNotHaveExtension(url)) {
+      file = find(expose, filesOnDisk, appendIndex(index, url));
+      if (file !== null) {
+        return file;
+      }
     }
 
     return null;
@@ -109,16 +126,30 @@ const staticServer = ({
       }
     }
 
+    if (doesNotHaveExtension(url)) {
+      for (let i = 0; i < expose.length; i++) {
+        const file = filePath(
+          expose[i].path,
+          expose[i].as,
+          appendIndex(index, url),
+        );
+        if (file !== null) {
+          log += `\n   ${file}`;
+        }
+      }
+    }
+
     return log;
   };
 
   return http.createServer((req, res) => {
     const parsedUrl = urlparser.parse(req.url);
+
     // 1. Try external resolver
     let file = resolve(parsedUrl.pathname);
     // 2. Otherwise internal resolver
     if (file === null) {
-      file = resolveInternally(index, parsedUrl.pathname);
+      file = _resolve(index, parsedUrl.pathname);
     }
 
     if (file === null) {
@@ -137,7 +168,7 @@ const staticServer = ({
       res.end(content);
 
       if (verbose) {
-        console.log(`${cyan(req.method)} ${req.url}`);
+        console.log(`${cyan(req.method)} ${parsedUrl.pathname}`);
       }
     } catch (err) {
       res.statusCode = 500;
@@ -154,4 +185,6 @@ module.exports = {
   find,
   red,
   cyan,
+  appendIndex,
+  doesNotHaveExtension,
 };

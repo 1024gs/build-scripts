@@ -6,6 +6,7 @@ const {
   filePath,
   find,
   red,
+  appendIndex,
 } = require("../scripts/mod-static-server.js");
 
 /*
@@ -134,91 +135,88 @@ describe("staticServer(options)", () => {
   });
 
   afterAll(() => {
-    // httpSpy.mockRestore();
+    httpSpy.mockRestore();
   });
 
   it("serves the file foo.js", () => {
     const { simulateRequest, response } = createServer();
-    simulateRequest({ url: "http://www.mysite.com/foo.js" }, response);
+    simulateRequest({ url: "http://a.b/foo.js" }, response);
     expect(response.statusCode).toBe(200);
     expect(response.setHeader.mock.calls[0][0]).toBe("Content-Type");
     expect(response.setHeader.mock.calls[0][1]).toBe("text/javascript");
     expect(response.end.mock.calls[0][0]).toBe("const x = 1;\n");
   });
 
-  it("mime type defaults to text/plain", () => {
+  it("serves the nested file bar.css", () => {
     const { simulateRequest, response } = createServer();
-    simulateRequest({ url: "/foo.ts" }, response);
-    expect(response.setHeader.mock.calls[0][1]).toBe("text/plain");
-  });
-
-  it("returns 404 Not found", () => {
-    const { simulateRequest, response } = createServer();
-    simulateRequest({ url: "/non-existent-url" }, response);
-    expect(response.statusCode).toBe(404);
-    expect(response.end.mock.calls[0][0]).toBe("Not Found: /non-existent-url");
-  });
-
-  it("returns 500 Failed to read the file", () => {
-    const { simulateRequest, response } = createServer({
-      resolve: () => "non-existent-file",
-    });
-    simulateRequest({ url: "/foo.js" }, response);
-    expect(response.statusCode).toBe(500);
-    expect(response.end.mock.calls[0][0]).toBe(
-      "FAILED TO READ THE FILE: /foo.js",
-    );
-  });
-
-  it("virtual url", () => {
-    const { simulateRequest, response } = createServer({
-      expose: [{ path: "scripts-tests/utils-test-mock", as: "/foo" }],
-    });
-    simulateRequest(
-      { url: "http://www.mysite.com/foo/directory/bar.css" },
-      response,
-    );
+    simulateRequest({ url: "http://a.b/directory/bar.css" }, response);
     expect(response.statusCode).toBe(200);
     expect(response.setHeader.mock.calls[0][0]).toBe("Content-Type");
     expect(response.setHeader.mock.calls[0][1]).toBe("text/css");
     expect(response.end.mock.calls[0][0]).toBe("b {\n  color: black;\n}\n");
   });
 
-  it("verbose", () => {
+  it("serves the file exposed at the virtual url /foo", () => {
     const { simulateRequest, response } = createServer({
-      expose: [{ path: "scripts-tests/utils-test-mock", as: "/" }],
-      verbose: true,
+      expose: [{ path: "scripts-tests/utils-test-mock", as: "/foo" }],
     });
-    simulateRequest({ url: "/foo.js", method: "GET" }, response);
-    expect(console.log).toHaveBeenCalledWith("\x1B[36mGET\x1B[0m /foo.js");
-  });
-});
-
-describe("notFoundLog(index, url)", () => {
-  const httpSpy = jest.spyOn(http, "createServer");
-  let consoleLogSpy;
-  const createServer = (options) => {
-    consoleLogSpy = jest.spyOn(console, "log").mockImplementation(jest.fn());
-    http.createServer.mockImplementation((simulateRequest) => simulateRequest);
-    const simulateRequest = staticServer({
-      expose: [{ path: "scripts-tests/utils-test-mock", as: "/" }],
-      ...options,
-    });
-
-    const response = {
-      end: jest.fn(),
-      setHeader: jest.fn(),
-    };
-
-    return { simulateRequest, response };
-  };
-
-  afterEach(() => {
-    consoleLogSpy.mockRestore();
+    simulateRequest({ url: "http://a.b/foo/foo.js" }, response);
+    expect(response.statusCode).toBe(200);
+    expect(response.setHeader.mock.calls[0][0]).toBe("Content-Type");
+    expect(response.setHeader.mock.calls[0][1]).toBe("text/javascript");
+    expect(response.end.mock.calls[0][0]).toBe("const x = 1;\n");
   });
 
-  afterAll(() => {
-    // httpSpy.mockRestore();
+  it("serves index.html automatically", () => {
+    const { simulateRequest, response } = createServer();
+    simulateRequest({ url: "http://a.b" }, response);
+    expect(response.statusCode).toBe(200);
+    expect(response.setHeader.mock.calls[0][0]).toBe("Content-Type");
+    expect(response.setHeader.mock.calls[0][1]).toBe("text/html");
+    expect(response.end.mock.calls[0][0]).toBe("Hello World!\n");
+  });
+
+  it("index can be overrode", () => {
+    const { simulateRequest, response } = createServer({ index: "foo.js" });
+    simulateRequest({ url: "http://a.b" }, response);
+    expect(response.statusCode).toBe(200);
+    expect(response.setHeader.mock.calls[0][0]).toBe("Content-Type");
+    expect(response.setHeader.mock.calls[0][1]).toBe("text/javascript");
+    expect(response.end.mock.calls[0][0]).toBe("const x = 1;\n");
+  });
+
+  it("returns 404 not found", () => {
+    const { simulateRequest, response } = createServer();
+    simulateRequest({ url: "http://a.b/non-existent-url" }, response);
+    expect(response.statusCode).toBe(404);
+    expect(response.end.mock.calls[0][0]).toBe("Not Found: /non-existent-url");
+  });
+
+  it("returns 500 failed to read the file", () => {
+    const { simulateRequest, response } = createServer({
+      resolve: () => "this-will-throw-an-error",
+    });
+    simulateRequest({ url: "http://a.b/foo.js" }, response);
+    expect(response.statusCode).toBe(500);
+    expect(response.end.mock.calls[0][0]).toBe(
+      "FAILED TO READ THE FILE: /foo.js",
+    );
+  });
+
+  it("content type defaults to text/plain", () => {
+    const { simulateRequest, response } = createServer();
+    simulateRequest({ url: "http://a.b/foo.ts" }, response);
+    expect(response.setHeader.mock.calls[0][0]).toBe("Content-Type");
+    expect(response.setHeader.mock.calls[0][1]).toBe("text/plain");
+  });
+
+  it("works with cache disabled", () => {
+    const { simulateRequest, response } = createServer({ cache: false });
+    simulateRequest({ url: "http://a.b/foo.js" }, response);
+    expect(response.statusCode).toBe(200);
+    expect(response.setHeader.mock.calls[0][0]).toBe("Content-Type");
+    expect(response.setHeader.mock.calls[0][1]).toBe("text/javascript");
+    expect(response.end.mock.calls[0][0]).toBe("const x = 1;\n");
   });
 
   it("not found log", () => {
@@ -228,11 +226,26 @@ describe("notFoundLog(index, url)", () => {
         { path: "scripts-tests/utils-test-mock", as: "/foo" },
       ],
     });
-    simulateRequest({ url: "/foo/non-existent-url" }, response);
+    simulateRequest({ url: "http://a.b/foo/non-existent-url.js" }, response);
     expect(console.log).toHaveBeenCalledWith(
-      `${red("NONE WAS FOUND:")}` +
-        `\n   scripts-tests${path.sep}utils-test-mock${path.sep}foo${path.sep}non-existent-url` +
-        `\n   scripts-tests${path.sep}utils-test-mock${path.sep}non-existent-url`,
+      `${red("NONE WAS FOUND:")}\n` +
+        `   scripts-tests${path.sep}utils-test-mock${path.sep}foo${path.sep}non-existent-url.js\n` +
+        `   scripts-tests${path.sep}utils-test-mock${path.sep}non-existent-url.js`,
     );
+  });
+
+  it("verbose", () => {
+    const { simulateRequest, response } = createServer({ verbose: true });
+    simulateRequest({ url: "http://a.b/foo.js", method: "GET" }, response);
+    expect(console.log).toHaveBeenCalledWith("\x1B[36mGET\x1B[0m /foo.js");
+  });
+});
+
+describe("appendIndex()", () => {
+  it("appends index.html", () => {
+    expect(appendIndex("index.html", "foo")).toBe("foo/index.html");
+    expect(appendIndex("/index.html", "foo")).toBe("foo/index.html");
+    expect(appendIndex("index.html", "foo/")).toBe("foo/index.html");
+    expect(appendIndex("/index.html", "foo/")).toBe("foo/index.html");
   });
 });
