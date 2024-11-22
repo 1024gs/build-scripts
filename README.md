@@ -1,6 +1,6 @@
-# `App (Sergiu Ghenciu)`
+# `Build scripts`
 
-No description.
+Avoid build processes and use JavaScript in a more old-school.
 
 
 # Tasks
