@@ -1,0 +1,11 @@
+{
+  "name": "react",
+  "version": "16.13.1",
+  "description": "React is a JavaScript library for building user interfaces.",
+  "main": "cjs-entry.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}

@@ -1,3 +1,6 @@
+import React from "../vendors/react/react";
+import ReactDOM from "../vendors/react/react-dom";
+
 import App from "./app";
 
-document.getElementById("root")!.innerHTML = App();
+ReactDOM.render(<App />, document.getElementById("root"));

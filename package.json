@@ -17,7 +17,9 @@
   "license": "Do whatever you please",
   "dependencies": {
     "@babel/core": "7.26.0",
+    "@babel/plugin-transform-react-jsx": "7.25.9",
     "@babel/preset-env": "7.26.0",
+    "@types/react": "18.3.12",
     "autoprefixer": "10.4.20",
     "jest": "29.7.0",
     "livereload": "0.9.3",

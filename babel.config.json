@@ -3,6 +3,6 @@
     ["@babel/preset-env", { "useBuiltIns": false, "modules": false }]
   ],
   "plugins": [
-  
+    ["@babel/plugin-transform-react-jsx", {"pragma": "React.createElement"}]
   ]
 }
