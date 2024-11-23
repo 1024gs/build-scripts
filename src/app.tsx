@@ -1,4 +1,5 @@
-import React from "../vendors/react/react";
+// @ts-ignore
+import React, { useEffect } from "../vendors/react/react";
 import Navbar from "./components/navbar/navbar";
 
 const App = () => {
