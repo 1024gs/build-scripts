@@ -21,7 +21,7 @@ describe("utils", () => {
     const add = (a, b) => a + b;
     const addCurried = curry(add);
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(addCurried(1, 2)).toEqual(3);
       expect(addCurried(1)(2)).toEqual(3);
     });
@@ -42,7 +42,7 @@ describe("utils", () => {
       expect(all([], 2)).toEqual(true);
     });
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(all([equals2], 2)).toEqual(true);
       expect(all([equals2])(2)).toEqual(true);
     });
@@ -63,7 +63,7 @@ describe("utils", () => {
       expect(any([], 2)).toEqual(false);
     });
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(any([equals2], 2)).toEqual(true);
       expect(any([equals2])(2)).toEqual(true);
     });
@@ -77,7 +77,7 @@ describe("utils", () => {
       expect(not(equals2, 2)).toEqual(false);
     });
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(not(equals2, 3)).toEqual(true);
       expect(not(equals2)(3)).toEqual(true);
     });
@@ -89,7 +89,7 @@ describe("utils", () => {
       expect(isPrefixOf("bar", "foo/bar")).toEqual(false);
     });
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(isPrefixOf("foo", "foo/bar")).toEqual(true);
       expect(isPrefixOf("foo")("foo/bar")).toEqual(true);
     });
@@ -101,7 +101,7 @@ describe("utils", () => {
       expect(isSuffixOf("foo", "foo/bar")).toEqual(false);
     });
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(isSuffixOf("bar", "foo/bar")).toEqual(true);
       expect(isSuffixOf("bar")("foo/bar")).toEqual(true);
     });
@@ -113,7 +113,7 @@ describe("utils", () => {
       expect(is(".css", "foo.js")).toEqual(false);
     });
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(is(".js", "foo.js")).toEqual(true);
       expect(is(".js")("foo.js")).toEqual(true);
     });
@@ -125,7 +125,7 @@ describe("utils", () => {
       expect(isNot(".js", "foo.js")).toEqual(false);
     });
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(isNot(".css", "foo.js")).toEqual(true);
       expect(isNot(".css")("foo.js")).toEqual(true);
     });
@@ -139,7 +139,7 @@ describe("utils", () => {
       expect(test(/\.js/, "foo/bar")).toEqual(false);
     });
 
-    it("returns a curried function", () => {
+    it("is a curried function", () => {
       expect(test(/\.js$/, "foo.js")).toEqual(true);
       expect(test(/\.js$/)("foo.js")).toEqual(true);
     });
