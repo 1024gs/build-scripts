@@ -1,5 +1,5 @@
-import React from "../vendors/react/react";
-import ReactDOM from "../vendors/react/react-dom";
+import React from "../vendors/react/react.js";
+import ReactDOM from "../vendors/react/react-dom.js";
 
 import App from "./app";
 

@@ -1,8 +1,11 @@
-// @ts-ignore
-import React, { useEffect } from "../vendors/react/react";
+import React, { useEffect } from "../vendors/react/react.js";
 import Navbar from "./components/navbar/navbar";
 
 const App = () => {
+
+  useEffect(()=> {
+    console.log('Hello world')
+  }, [])
   return (
     <div className="app">
       <Navbar brand="My app" />
