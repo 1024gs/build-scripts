@@ -1,8 +1,5 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('jquery'), require('popper.js')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.bootstrap = {}, global.jQuery, global.Popper));
-})(this, (function (exports, $, Popper) { 'use strict';
+var bootstrap = (function (exports, $, Popper) {
+  'use strict';
 
   /**
    * --------------------------------------------------------------------------
@@ -1733,4 +1730,6 @@
   exports.Tab = Tab;
   exports.Util = Util;
 
-}));
+  return exports;
+
+})({}, jQuery, Popper);

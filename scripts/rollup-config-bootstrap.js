@@ -14,7 +14,7 @@ module.exports = {
   input: prependRoot("vendors/bootstrap/js/index.js"),
   output: {
     file: prependRoot("vendors/bootstrap/dist/js/bootstrap.js"),
-    format: 'umd',
+    format: "iife",
     globals: {jquery: 'jQuery', 'popper.js': 'Popper'},
     name: 'bootstrap'
   },
