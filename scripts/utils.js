@@ -77,20 +77,20 @@ const source =
   };
 
 const pipeline = ([source, ...fns]) => {
-  const fileNames = source();
   const pipe = fns.reduce(
     (f, g) => (a) => f(a).then(g),
     (a) => Promise.resolve(a),
   );
 
-  if (Array.isArray(fileNames)) {
-    return ({ fileName } = {}) =>
-      fileName
-        ? pipe({ fileName })
-        : Promise.all(fileNames.map((fileName) => pipe({ fileName })));
-  }
+  return ({ fileName } = {}) => {
+    const fileNames = fileName || source();
 
-  return ({ fileName } = { fileName: fileNames }) => pipe({ fileName });
+    if (Array.isArray(fileNames)) {
+      return Promise.all(fileNames.map((fileName) => pipe({ fileName })));
+    } else {
+      return pipe({ fileName: fileNames });
+    }
+  };
 };
 
 module.exports = {

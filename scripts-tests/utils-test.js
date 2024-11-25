@@ -295,6 +295,28 @@ describe("utils", () => {
       await myPipeline({ fileName: "baz" });
     });
 
+    it("overrides the file (array)", async () => {
+      const spy = jest.fn();
+
+      const pipe1 =
+        (options) =>
+        ({ fileName, content }) => {
+          spy(fileName);
+          return { fileName, content };
+        };
+
+      const myPipeline = pipeline([
+        source({ findFiles: () => ["foo", "bar"] }), // source must always be here. It is a special pipe.
+        pipe1(),
+      ]);
+
+      await myPipeline({ fileName: ["baz", "caz"] });
+
+      expect(spy).toHaveBeenCalledTimes(2);
+      expect(spy.mock.calls[0][0]).toBe("baz");
+      expect(spy.mock.calls[1][0]).toBe("caz");
+    });
+
     it("the pipes can be asynchronous", async () => {
       const pipe1 =
         (options) =>
