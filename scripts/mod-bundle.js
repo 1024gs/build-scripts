@@ -1,3 +1,4 @@
+const fs = require("fs");
 const { rollup } = require("rollup");
 const { prependRoot } = require("./config.js");
 const { is } = require("./utils.js");
@@ -37,21 +38,19 @@ const outputOptions = {
   sourcemap: false,
 };
 
-const pipe =
-  ({ isProduction } = { isProduction: false }) =>
-  async ({ fileName, content }) => {
-    const bundle = await rollup({
-      ...inputOptions,
-      input: fileName,
-      plugins: [rollupReactResolvePlugin({ isProduction })],
-    });
+const bundle = async ({ isProduction }) => {
+  const bundle = await rollup({
+    ...inputOptions,
+    input: prependRoot("src/index.js"),
+    plugins: [rollupReactResolvePlugin({ isProduction })],
+  });
 
-    const { output } = await bundle.generate({ ...outputOptions });
-    await bundle.close();
+  const { output } = await bundle.generate({ ...outputOptions });
+  await bundle.close();
 
-    return { fileName, content: output[0].code };
-  };
+  fs.writeFileSync(prependRoot("src/index.js"), output[0].code);
+};
 
 module.exports = {
-  rollup: pipe,
+  bundle,
 };

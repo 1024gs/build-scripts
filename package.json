@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run scripts & npm run styles && node ./scripts/task-start.js & npm run watch",
+    "serve-dist": "node ./scripts/task-start.js --dist",
     "scripts": "node ./scripts/task-scripts.js",
     "styles": "node ./scripts/task-styles.js",
     "build": "node ./scripts/task-build.js",
@@ -30,6 +31,7 @@
     "postcss": "8.4.49",
     "rollup": "4.27.4",
     "sass": "1.32.13",
-    "typescript": "5.6.3"
+    "typescript": "5.6.3",
+    "useref": "1.4.4"
   }
 }

@@ -1,4 +1,4 @@
-import React from "../../../vendors/react/react";
+import React from "../../../vendors/react/react.js";
 
 const Navbar = ({ brand }: propTypes) => {
   return (

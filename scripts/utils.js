@@ -66,6 +66,10 @@ const scanDir = (dir) => {
   return result;
 };
 
+const mkDirR = (targetDir) => {
+  fs.mkdirSync(targetDir, { recursive: true });
+};
+
 const source =
   ({ findFiles } = { findFiles: () => undefined }) =>
   () => {
@@ -103,6 +107,7 @@ module.exports = {
   test: curry(test),
 
   scanDir,
+  mkDirR,
 
   pipeline,
   source,

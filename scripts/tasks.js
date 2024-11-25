@@ -7,7 +7,6 @@ const { autoprefixer } = require("./pipe-autoprefixer.js");
 const { babel } = require("./pipe-babel.js");
 const { typescript } = require("./pipe-typescript.js");
 const { pipeline, source } = require("./utils.js");
-const { rollup } = require("./pipe-rollup.js");
 
 const styles = pipeline([
   source({ findFiles: scssSource }),
@@ -33,15 +32,8 @@ const buildBootstrap = pipeline([
   write({ destination: () => "vendors/bootstrap/dist/css/bootstrap.css" }),
 ]);
 
-const build = pipeline([
-  source({ findFiles: () => "src/index.js" }),
-  rollup({ isProduction: false }),
-  write({ destination: () => "src/index.js" }),
-]);
-
 module.exports = {
   styles,
   scripts,
   buildBootstrap,
-  build,
 };
