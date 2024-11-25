@@ -1,7 +1,7 @@
 {
   "name": "build-scripts",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A few scripts for starting a new project, such as building and transpiling typescript.",
   "main": "index.js",
   "scripts": {
