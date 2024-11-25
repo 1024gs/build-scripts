@@ -2,9 +2,7 @@
 
 Avoid bundling and develop in a more old-school way.
 
-Look at the scripts and scripts-tests folders.
-
-The whole repository is meant to be cloned and start the development.
+Clone the repository and start the development.
 
 # Tasks
 
