@@ -9,7 +9,7 @@
     "serve-dist": "node ./scripts/task-start.js --dist",
     "scripts": "node ./scripts/task-scripts.js",
     "styles": "node ./scripts/task-styles.js",
-    "build": "node ./scripts/task-build.js",
+    "build": "npm run scripts & npm run styles & node ./scripts/task-build.js",
     "build-bootstrap-css": "node ./scripts/task-build-bootstrap.js",
     "build-bootstrap-js": "rollup --config scripts/rollup-config-bootstrap.js",
     "watch": "node ./scripts/task-watch.js",
